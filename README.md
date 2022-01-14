@@ -1,2 +1,5 @@
-# esp-ssd1305
-ssd1305 display driver component for esp 32
+# Blink Example
+
+Starts a FreeRTOS task to blink an LED
+
+See the README.md file in the upper level 'examples' directory for more information about examples.

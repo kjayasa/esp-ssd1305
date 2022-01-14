@@ -1,0 +1,121 @@
+#include "driver/gpio.h"
+#include "driver/spi_master.h"
+#include "esp_log.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "ssd1305.h"
+
+#include "sdkconfig.h"
+#include "ImageData.h"
+#include "fonts.h"
+
+#define OLED_2in23_WIDTH 128
+#define OLED_2in23_HEIGHT 32
+
+#define FONTS_COUNT 48
+
+#if 1
+static font *allfonts[] =
+    {
+        &font_teletactile_8, &font_teletactile_13, &font_teletactile_15, &font_teletactile_18, &font_teletactile_19, &font_teletactile_21, &font_teletactile_22
+    };
+
+char string[5] = {0};
+
+#endif
+
+void task_test_SSD1306(void)
+{
+    vTaskDelay(20 / portTICK_RATE_MS);
+
+    printf("OELD_test Demo... starting\r\n");
+
+    init_ssd1350();
+
+    printf("OELD Init complete\r\n");
+
+    while (1)
+    {
+
+        
+            clear_framebuffer(0);
+            draw_bitmap(0, 0, bitmap_kunju_draw.buffer, bitmap_kunju_draw.width, bitmap_kunju_draw.height, orintation_normal, transfer_mode_normal);
+            send_buffer();
+            vTaskDelay(1000 / portTICK_RATE_MS);
+
+#if 0
+        for (int i = 0; i < 5; i++)
+        {
+
+            clear_framebuffer(0);
+            draw_bitmap(70, 14, bitmap_test_14x14.buffer, bitmap_test_14x14.width, bitmap_test_14x14.height, orintation_normal, transfer_mode_normal);
+            send_buffer();
+            vTaskDelay(100 / portTICK_RATE_MS);
+
+            clear_framebuffer(0);
+            draw_bitmap(84, 14, bitmap_test_14x14.buffer, bitmap_test_14x14.width, bitmap_test_14x14.height, orintation_ninenty, transfer_mode_normal);
+            send_buffer();
+            vTaskDelay(100 / portTICK_RATE_MS);
+
+            clear_framebuffer(0);
+            draw_bitmap(84, 28, bitmap_test_14x14.buffer, bitmap_test_14x14.width, bitmap_test_14x14.height, orintation_oneeighty, transfer_mode_normal);
+            send_buffer();
+            vTaskDelay(100 / portTICK_RATE_MS);
+
+            clear_framebuffer(0);
+            draw_bitmap(70, 28, bitmap_test_14x14.buffer, bitmap_test_14x14.width, bitmap_test_14x14.height, orintation_twoseventy, transfer_mode_normal);
+            send_buffer();
+            vTaskDelay(100 / portTICK_RATE_MS);
+        }
+#endif
+
+#if 0
+        for (size_t i = 0; i < FONTS_COUNT; i++)
+        {
+            clear_framebuffer(0);
+            draw_text("Riddha", 0, 0, allfonts[i], orintation_normal, transfer_mode_transperent);
+            send_buffer();
+            vTaskDelay(1000 / portTICK_RATE_MS);
+
+            clear_framebuffer(0);
+            sprintf(string, "%d", i);
+            draw_text(string, 0, 0, &font_teletactile_18, orintation_normal, transfer_mode_transperent);
+            send_buffer();
+            vTaskDelay(1000 / portTICK_RATE_MS);
+        }
+#endif
+
+#if 0
+        //TODO: bug- Wrapping is happening
+        clear_framebuffer(0);
+        draw_text("Riddha", 0, 0, &font_teletactile_11, orintation_normal, transfer_mode_normal);
+        send_buffer();
+        vTaskDelay(1000 / portTICK_RATE_MS);
+
+        clear_framebuffer(0);
+        draw_text("Riddha", 126, 0, &font_teletactile_11, orintation_ninenty, transfer_mode_normal);
+        send_buffer();
+        vTaskDelay(1000 / portTICK_RATE_MS);
+
+        clear_framebuffer(0);
+        draw_text("Riddha", 127, 31, &font_teletactile_11, orintation_oneeighty, transfer_mode_normal);
+        send_buffer();
+        vTaskDelay(1000 / portTICK_RATE_MS);
+
+        clear_framebuffer(0);
+        draw_text("Riddha", 1, 31, &font_teletactile_11, orintation_twoseventy, transfer_mode_normal);
+        send_buffer();
+        vTaskDelay(1000 / portTICK_RATE_MS);
+
+#endif
+    }
+}
+
+void app_main()
+{
+    task_test_SSD1306();
+}
