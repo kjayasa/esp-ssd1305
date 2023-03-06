@@ -1,5 +1,4 @@
-# Blink Example
+# ssd1305 display driver
 
-Starts a FreeRTOS task to blink an LED
+dispvay driver for the popular ssd1305 oled driver. The accombininf tool [Bitmapper]( https://github.com/kjayasa/ssd1305-bitmapper) can be sued to create bitmapped images that can be used by this driver.
 
-See the README.md file in the upper level 'examples' directory for more information about examples.
